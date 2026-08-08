@@ -5,6 +5,7 @@ set -e
 INSTALLDIR=${1:-$PWD/BUILD_native_dyn/INSTALL}
 SOURCEDIR=${2:-$PWD/SOURCE/kiwix-desktop}
 APPDIR=${3:-$PWD/AppDir}
+QTDIR=${4:-$PWD/Qt/6.8.3/gcc_64}
 
 SYSTEMLIBDIR=lib/x86_64-linux-gnu
 if [ ! -e "$INSTALLDIR/lib" ] ; then
@@ -15,9 +16,9 @@ ICONFILE=$SOURCEDIR/resources/icons/kiwix/scalable/kiwix-desktop.svg
 DESKTOPFILE=$SOURCEDIR/resources/org.kiwix.desktop.desktop
 
 # Get linuxdeploy
-wget --continue https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage
+wget --continue https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20251107-1/linuxdeploy-x86_64.AppImage
 chmod u+x linuxdeploy-x86_64.AppImage
-wget --continue https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-x86_64.AppImage
+wget --continue https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-qt-x86_64.AppImage
 chmod u+x linuxdeploy-plugin-qt-x86_64.AppImage
 
 # Fill with all deps libs and so
@@ -36,12 +37,15 @@ mkdir -p $APPDIR/usr/bin/ && unzip aria2-1.37.0-x86_64-linux-musl_libressl_stati
 # Copy the CA trustore from the hosting system
 mkdir -p $APPDIR/etc/ssl/certs/ && cp /etc/ssl/certs/ca-certificates.crt $APPDIR/etc/ssl/certs/
 
+# Copy a Qt6 resource missed by linuxdeploy-plugin-qt
+cp "$QTDIR"/resources/v8_context_snapshot.bin "$APPDIR"/usr/resources/
+
 # Fix the RPATH of QtWebEngineProcess [TODO] Fill a issue ?
 patchelf --set-rpath '$ORIGIN/../lib' $APPDIR/usr/libexec/QtWebEngineProcess
 
 mv $APPDIR/{AppRun.wrapped,kiwix-desktop}
 sed -i 's/AppRun\.wrapped/kiwix-desktop/g' $APPDIR/AppRun
-wget --continue https://github.com/AppImage/AppImageKit/releases/download/13/obsolete-appimagetool-x86_64.AppImage
-chmod u+x obsolete-appimagetool-x86_64.AppImage
+wget --continue https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+chmod u+x appimagetool-x86_64.AppImage
 
-./obsolete-appimagetool-x86_64.AppImage AppDir Kiwix-"$VERSION"-x86_64.AppImage
+./appimagetool-x86_64.AppImage AppDir Kiwix-"$VERSION"-x86_64.AppImage

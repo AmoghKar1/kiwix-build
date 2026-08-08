@@ -268,7 +268,7 @@ try:
                 host,
                 port=port,
                 username=user,
-                key_filename=_environ.get("SSH_KEY"),
+                key_filename=_environ.get("KIWIX_FILE_UPLOAD_SSH_KEY_PATH"),
                 look_for_keys=False,
                 compress=True,
             )
@@ -331,7 +331,7 @@ except ModuleNotFoundError:
             "-c",
             "aes128-ctr",
             "-i",
-            _environ.get("SSH_KEY"),
+            _environ.get("KIWIX_FILE_UPLOAD_SSH_KEY_PATH"),
             "-P",
             port,
             "-o",
@@ -349,7 +349,7 @@ except ModuleNotFoundError:
             "-P",
             port,
             "-i",
-            _environ.get("SSH_KEY"),
+            _environ.get("KIWIX_FILE_UPLOAD_SSH_KEY_PATH"),
             "-o",
             "StrictHostKeyChecking=no",
             str(file_to_upload),
@@ -365,10 +365,10 @@ def upload_archive(archive, project, make_release, dev_branch=None):
         return
 
     if project.startswith("kiwix-") or project in ["libkiwix"]:
-        host = "ci@master.download.kiwix.org:30022"
-        dest_path = "/data/download/"
+        host = "kiwix-build@master.download.kiwix.org:30322"
+        dest_path = "/data/kiwix/"
     else:
-        host = "ci@download.openzim.org:30022"
+        host = "kiwix-build@download.openzim.org:30322"
         dest_path = "/data/openzim/"
 
     if make_release:
@@ -377,6 +377,7 @@ def upload_archive(archive, project, make_release, dev_branch=None):
         dest_path = dest_path + "nightly/" + DATE
 
     if dev_branch:
+        host = "kiwix-build@tmp.kiwix.org:30522"
         dest_path = "/data/tmp/ci/dev_preview/" + dev_branch
     else:
         # Make the archive read only. This way, scp will preserve rights.
@@ -620,7 +621,7 @@ def update_flathub_git():
     call(command)
     command = ["git", "push", "origin", branch_name]
     env["GIT_SSH_COMMAND"] = "ssh -o StrictHostKeyChecking=no -i " + _environ.get(
-        "SSH_KEY"
+        "KIWIXBOT_GIT_SSH_KEY_PATH"
     )
     call(command)
 

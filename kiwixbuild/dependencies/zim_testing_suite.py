@@ -9,9 +9,9 @@ class ZimTestingSuite(Dependency):
 
     class Source(ReleaseDownload):
         archive = Remotefile(
-            "zim-testing-suite-0.8.0.tar.gz",
-            "28f51449a3f9aea02652ca21f32c5598fd610d6cec3810fa552bd0c0f7a2d5fc",
-            "https://github.com/openzim/zim-testing-suite/releases/download/0.8.0/zim-testing-suite-0.8.0.tar.gz",
+            "zim-testing-suite-0.10.0.tar.gz",
+            "348821681a8f10eac8b7ca01dd48645d5b9a9c7d5b723edb0503d7d7f1042a96",
+            "https://github.com/openzim/zim-testing-suite/releases/download/0.10.0/zim-testing-suite-0.10.0.tar.gz",
         )
 
     Builder = NoopBuilder

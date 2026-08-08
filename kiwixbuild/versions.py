@@ -1,11 +1,11 @@
 # This file reference all the versions of the depedencies we use in kiwix-build.
 
 main_project_versions = {
-    "libzim": "9.4.1",
-    "libkiwix": "14.1.1",
-    "kiwix-tools": "3.8.1",
-    "zim-tools": "3.6.0",
-    "kiwix-desktop": "2.5.0",
+    "libzim": "9.8.1",
+    "libkiwix": "14.2.1",
+    "kiwix-tools": "3.8.2",
+    "zim-tools": "3.7.0",
+    "kiwix-desktop": "2.5.1",
 }
 
 # This dictionnary specify what we need to build at each release process.
@@ -23,22 +23,22 @@ main_project_versions = {
 #    - Else, increment the value. If no value was present, see `(was ...)`.
 
 release_versions = {
-    "libzim": None,  # Depends of base deps (was 0)
-    "libkiwix": None,  # Depends of libzim (was 0)
+    "libzim": 0,  # Depends of base deps (was 0)
+    "libkiwix": None,  # Depends of libzim (was 2)
     "kiwix-tools": None,  # Depends of libkiwix and libzim (was 0)
-    "zim-tools": None,  # Depends of libzim (was 0)
-    "kiwix-desktop": 1,  # Depends of libkiwix and libzim (was 0)
+    "zim-tools": None,  # Depends of libzim (was 1)
+    "kiwix-desktop": None,  # Depends of libkiwix and libzim (was 0)
 }
 
 
 # This is the "version" of the whole base_deps_versions dict.
 # Change this when you change base_deps_versions.
-base_deps_meta_version = "19"
+base_deps_meta_version = "26"
 
 base_deps_versions = {
     "zlib": "1.3.1",
     "lzma": "5.2.6",
-    "zstd": "1.5.2",
+    "zstd": "1.5.7",
     "docoptcpp": "0.6.2",
     "uuid": "1.47.3",
     "xapian-core": "1.4.26",
@@ -52,6 +52,6 @@ base_deps_versions = {
     "android-ndk": "r23c",
     "org.kde": "6.10",
     "io.qt.qtwebengine": "6.10",
-    "zim-testing-suite": "0.8.0",
+    "zim-testing-suite": "0.10.0",
     "emsdk": "3.1.41",
 }
