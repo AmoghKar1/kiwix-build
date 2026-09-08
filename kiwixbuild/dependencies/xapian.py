@@ -44,7 +44,7 @@ class Xapian(Dependency):
             ]
             configure_env = {
                 "_format_LDFLAGS": "{env.LDFLAGS} -L{buildEnv.install_dir}/{buildEnv.libprefix}",
-                "_format_CXXFLAGS": "{env.CXXFLAGS} -I{buildEnv.install_dir}/include",
+                "_format_CXXFLAGS": "{env.CXXFLAGS} -O3 -I{buildEnv.install_dir}/include",
             }
 
             @classmethod
