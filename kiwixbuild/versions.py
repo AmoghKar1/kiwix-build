@@ -8,26 +8,26 @@ main_project_versions = {
     "kiwix-desktop": "2.5.1",
 }
 
-# This dictionnary specify what we need to build at each release process.
+# This dictionary specifies what we need to build at each release process.
 # - Values are integer or None
 # - If a project is not in the dict (or None), the project is not released.
 # - If release_versions[project] == 0, this is the first time the project is
-#   build for this release, so publish src and build archives.
+#   built for this release, so publish src and build archives.
 # - If release_versions[project] > 0, release only the build archive with a
 #   build postfix.
-# To change this dictionnary, use the following algorithm:
-# - If project version change, set release_versions[project] = 0
+# To change this dictionary, use the following algorithm:
+# - If project version changes, set release_versions[project] = 0
 # - Else
-#    - If project depedencies have not change, set it to None and update the
+#    - If project depedencies have not changed, set it to None and update the
 #     `(was ...)`.
 #    - Else, increment the value. If no value was present, see `(was ...)`.
 
 release_versions = {
-    "libzim": None,  # Depends of base deps (was 0)
-    "libkiwix": None,  # Depends of libzim (was 2)
-    "kiwix-tools": None,  # Depends of libkiwix and libzim (was 0)
-    "zim-tools": 0,  # Depends of libzim (was None)
-    "kiwix-desktop": None,  # Depends of libkiwix and libzim (was 0)
+    "libzim": 1,  # Depends on base deps (was None)
+    "libkiwix": None,  # Depends on libzim (was 2)
+    "kiwix-tools": None,  # Depends on libkiwix and libzim (was 0)
+    "zim-tools": None,  # Depends on libzim (was 0)
+    "kiwix-desktop": None,  # Depends on libkiwix and libzim (was 0)
 }
 
 
